@@ -1,0 +1,230 @@
+try: 
+    age = int(input("Enter your age: "))
+
+    if age < 0:
+        print("Error: Age cannot be negative.")
+    else:
+
+        matinee_input = input("Is this a matinee showing? (yes/no): ").strip().lower()
+
+        is_matinee = True if matinee_input == "yes" else False
+
+        price = 0.0
+        age_group = ""
+
+        if age < 13:
+            age_group = "Child"
+
+            if is_matinee:
+                price = 6.00
+            else:
+                price = 8.00
+        elif age <= 17:
+            age_group = "Teen"
+            if is_matinee:
+                price = 7.00
+            else:
+                price = 10.00
+        else:
+            age_group = "Senior"
+            if is_matinee:
+                price = 6.00
+            else:
+                price = 7.00
+        
+        print(f"\nAge group: {age_group}")
+        print(f"Ticket price: ${price:.2f}")
+
+except ValueError:
+    print("Error: Please enter a valid whole number for age.")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+errors = []
+
+
+student_id = input("Enter student ID: ")
+name = input("Enter full name: ")
+age_input = input("Enter age: ")
+major = input("Enter major: ")
+
+
+if len(student_id) != 8:
+    errors.append("Student ID must be exactly 8 characters.")
+else:
+    if not student_id[0].isalpha():
+        errors.append("The first character of the Student ID must be a letter.")
+    if not student_id[1:].isdigit():
+        errors.append("The remaining 7 characters of the Student ID must be digits.")
+
+
+if len(name.strip()) < 2:
+    errors.append("Name must be at least 2 characters long (excluding whitespace).")
+
+
+try:
+    age = int(age_input)
+    if age < 16 or age > 99:
+        errors.append("Age must be between 16 and 99 (inclusive).")
+except ValueError:
+    errors.append("Age must be a valid integer.")
+
+
+valid_majors = ["CS", "IT", "CE", "DS"]
+if major.upper() not in valid_majors:
+    errors.append("Major must be one of: CS, IT, CE, or DS.")
+
+
+print("-" * 20) 
+if not errors:
+   
+    print("Success! Profile created.")
+    print(f"ID: {student_id}")
+    print(f"Name: {name.strip()}")
+    print(f"Age: {age}")
+    print(f"Major: {major.upper()}")
+else:
+   
+    print("Validation failed. Please fix the following errors:")
+    for error in errors:
+        print(f"- {error}")
+
+
+
+
+
+
+
+
+
+
+
+
+def main():
+    print("--- Campus Café Menu ---")
+    print("1. Coffee                $3.50")
+    print("2. Sandwich              $6.00")
+    print("3. Salad                 $5.50")
+    print("4. Combo (Sand/Coffee)   $8.00")
+    print("5. Exit")
+    
+    choice = input("\nPlease select an option (1-5): ")
+
+    if choice == '5':
+        print("Goodbye!")
+        return
+    
+   
+    base_price = 0.0
+    addon_cost = 0.0
+    item_name = ""
+
+   
+    if choice == '1':
+        item_name = "Coffee"
+        base_price = 3.50
+        size = input("Choose size (Small, Medium, Large): ").strip().capitalize()
+        if size == "Medium":
+            addon_cost += 1.00
+        elif size == "Large":
+            addon_cost += 2.00
+        elif size == "Small":
+            addon_cost += 0.00
+        else:
+            print("Invalid size. Defaulting to Small.")
+            size = "Small"
+
+    elif choice == '2':
+        item_name = "Sandwich"
+        base_price = 6.00
+        cheese = input("Add cheese? (yes/no): ").strip().lower()
+        if cheese == "yes":
+            addon_cost += 0.75
+        elif cheese == "no":
+            addon_cost += 0.00
+        else:
+            print("Invalid input. Defaulting to no cheese.")
+
+    elif choice == '3':
+        item_name = "Salad"
+        base_price = 5.50
+        dressing = input("Choose dressing (ranch, italian, vinaigrette, none): ").strip().lower()
+        valid_dressings = ["ranch", "italian", "vinaigrette", "none"]
+        if dressing not in valid_dressings:
+            print("Invalid dressing. Defaulting to none.")
+            dressing = "none"
+
+    elif choice == '4':
+        item_name = "Combo"
+        base_price = 8.00
+        
+        size = input("Choose coffee size (Small, Medium, Large): ").strip().capitalize()
+        if size == "Medium":
+            addon_cost += 1.00
+        elif size == "Large":
+            addon_cost += 2.00
+        elif size == "Small":
+            pass
+        else:
+            print("Invalid size. Defaulting to Small.")
+        cheese = input("Add cheese to sandwich? (yes/no): ").strip().lower()
+        if cheese == "yes":
+            addon_cost += 0.75
+
+    else:
+        print("Invalid menu choice.")
+        return
+
+    
+    student_name = ""
+    while not student_name:
+        student_name = input("Enter student name: ").strip()
+        if not student_name:
+            print("Name cannot be empty.")
+
+    
+    while True:
+        try:
+            quantity = int(input("How many would you like? "))
+            if quantity > 0:
+                break
+            else:
+                print("Please enter a positive number.")
+        except ValueError:
+            print("Invalid input. Please enter a whole number.")
+
+   
+    unit_price = base_price + addon_cost
+    subtotal = unit_price * quantity
+    tax = subtotal * 0.07
+    total = subtotal + tax
+
+  
+    print("\n" + "="*30)
+    print("      CAMPUS CAFÉ RECEIPT")
+    print("="*30)
+    print(f"Customer: {student_name}")
+    print(f"Item:     {item_name}")
+    print(f"Quantity: {quantity}")
+    print(f"Subtotal: ${subtotal:,.2f}")
+    print(f"Tax (7%): ${tax:,.2f}")
+    print("-" * 30)
+    print(f"TOTAL:    ${total:,.2f}")
+    print("="*30)
+
+if __name__ == "__main__":
+    main()
+
